@@ -20,11 +20,17 @@ jobs:
 
             id=$(docker create ${IMAGE_NAME})
             mkdir -p dist
-            docker cp $id:/build/muenvsubst ./dist/
+            docker cp $id:/build/muenvsubst .
             docker rm -v $id
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
           name: muenvsubst
-          path: dist/muenvsubst
+          path: muenvsubst
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: muenvsubst
