@@ -1,11 +1,5 @@
 name: Build muenvsubst
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+on: push
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,24 +7,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Build
-        run: |
-            IMAGE_NAME=muenvsubst-build
-
-            docker build --progress plain --tag ${IMAGE_NAME} .
-
-            id=$(docker create ${IMAGE_NAME})
-            mkdir -p dist
-            docker cp $id:/build/muenvsubst .
-            docker rm -v $id
+        run: ./build.sh
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
           name: muenvsubst
-          path: muenvsubst
+          path: dist/muenvsubst
 
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: muenvsubst
+          files: dist/muenvsubst
