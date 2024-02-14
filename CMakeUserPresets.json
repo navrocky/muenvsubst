@@ -1,0 +1,9 @@
+{
+    "version": 4,
+    "vendor": {
+        "conan": {}
+    },
+    "include": [
+        "/home/vlad/prog/my/mustaches/build/CMakePresets.json"
+    ]
+}

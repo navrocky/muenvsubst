@@ -1,0 +1,10 @@
+---
+BasedOnStyle: WebKit
+---
+Language: Cpp
+NamespaceIndentation: None
+ColumnLimit: 120
+AllowShortEnumsOnASingleLine: No
+IndentCaseLabels: Yes
+AlwaysBreakTemplateDeclarations: Yes
+...
