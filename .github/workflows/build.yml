@@ -7,7 +7,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Build
-        run: ./build.sh
+        run: ./build-uclibc.sh
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
