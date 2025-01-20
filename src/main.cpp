@@ -50,7 +50,7 @@ int main(int argc, char** argv, char** envp)
         cmd.parse();
 
         if (cmd.isDefined("-V")) {
-            cout << "1.0.1" << endl;
+            cout << "1.0.2" << endl;
             return 0;
         }
 
