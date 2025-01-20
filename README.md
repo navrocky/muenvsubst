@@ -9,7 +9,7 @@ can be run in a docker from scratch.
 Installation:
 
 ```sh
-curl https://github.com/navrocky/muenvsubst/releases/download/1.0.1/muenvsubst -Lo /usr/local/bin/muenvsubst
+curl https://github.com/navrocky/muenvsubst/releases/download/1.0.2/muenvsubst -Lo /usr/local/bin/muenvsubst
 chmod +x /usr/local/bin/muenvsubst
 ```
 
