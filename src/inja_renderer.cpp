@@ -30,6 +30,6 @@ string renderWithInja(const string& tmpl, char** envp)
     auto envs = getAllEnvs<inja::json>(envp);
     inja::Environment env;
     env.add_callback("split", bind(split, _1));
-    env.add_callback("error", bind(split, _1));
+    env.add_callback("error", bind(error, _1));
     return env.render(tmpl, envs);
 }
