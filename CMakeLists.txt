@@ -16,7 +16,13 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
 endif()
 
 set(SOURCES
+  src/inja_renderer.cpp
+  src/inja_renderer.h
   src/main.cpp
+  src/mstch_renderer.cpp
+  src/mstch_renderer.h
+  src/tools.cpp
+  src/tools.h
 )
 
 add_executable(${TARGET} ${SOURCES})

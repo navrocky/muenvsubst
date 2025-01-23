@@ -59,6 +59,12 @@ Additional functions:
   ```
   split(text: string, delimiter: string): string
   ```
+  
+- Throw error:
+  
+  ```
+  error(message: string)
+  ```
 
 ## Mstch examples
 

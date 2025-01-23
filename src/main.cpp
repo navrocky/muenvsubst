@@ -1,92 +1,18 @@
-#include <iostream>
-#include <iterator>
 #include <sstream>
 
 #include <args-parser/all.hpp>
 #include <functional>
-#include <inja/inja.hpp>
-#include <mstch/mstch.hpp>
+
+#include "inja_renderer.h"
+#include "mstch_renderer.h"
+#include "tools.h"
 
 using namespace std;
 using namespace std::placeholders;
 using namespace Args;
 
-string readAllInput()
-{
-    cin >> noskipws;
-    istream_iterator<char> it(cin);
-    istream_iterator<char> end;
-    return string(it, end);
-}
-
-struct KeyValue {
-    string key;
-    string value;
-};
-
-KeyValue parseKeyValue(const string& s)
-{
-    auto i = s.find("=");
-    if (i == string::npos)
-        return { .key = s };
-    return {
-        .key = s.substr(0, i),
-        .value = s.substr(i + 1),
-    };
-}
-
-template <typename Map>
-Map getAllEnvs(char** envp)
-{
-    Map m;
-    for (char** env = envp; *env != 0; env++) {
-        auto kv = parseKeyValue(*env);
-        m[kv.key] = kv.value;
-    }
-    return m;
-}
-
 static const char* MSTCH_ENGINE = "mstch";
 static const char* INJA_ENGINE = "inja";
-
-string renderWithMstch(const string& tmpl, char** envp)
-{
-    auto envs = getAllEnvs<mstch::map>(envp);
-    return mstch::render(tmpl, envs);
-}
-
-vector<string> stringSplit(const string& s, const string& delimiter)
-{
-    vector<string> res;
-    if (delimiter.empty()) {
-        res.push_back(s);
-        return res;
-    }
-    string::size_type prevPos = 0, pos = 0;
-    while ((pos = s.find(delimiter, pos)) != string::npos) {
-        res.push_back(s.substr(prevPos, pos - prevPos));
-        prevPos = ++pos;
-    }
-    res.push_back(s.substr(prevPos, pos - prevPos));
-    return res;
-}
-
-inja::json split(const inja::Arguments& args)
-{
-    if (args.size() != 2)
-        throw runtime_error("Expected 2 parameters: split(s: string, delimiter: string)");
-    auto s = args[0]->get<string>();
-    auto delimiter = args[1]->get<string>();
-    return stringSplit(s, delimiter);
-}
-
-string renderWithInja(const string& tmpl, char** envp)
-{
-    auto envs = getAllEnvs<inja::json>(envp);
-    inja::Environment env;
-    env.add_callback("split", bind(split, _1));
-    return env.render(tmpl, envs);
-}
 
 int main(int argc, char** argv, char** envp)
 {
