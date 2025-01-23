@@ -17,7 +17,7 @@ Download and copy binary to any destination specified in `PATH` (~/bin, /usr/loc
 Do not forget to set execution flag on binary with `chmod`.
 
 ```sh
-sudo curl https://github.com/navrocky/muenvsubst/releases/download/1.1.0/muenvsubst -Lo /usr/local/bin/muenvsubst
+sudo curl https://github.com/navrocky/muenvsubst/releases/download/1.2.0/muenvsubst -Lo /usr/local/bin/muenvsubst
 sudo chmod +x /usr/local/bin/muenvsubst
 ```
 
@@ -32,7 +32,7 @@ USAGE: ./muenvsubst [ -e, --engine <arg> ] [ -h, --help <arg> ] [ -V,
 
 OPTIONAL:
  -e, --engine <arg> Use template engine. Supported engines: mstch, inja. 
-                    Default is: mstch 
+                    Default is: inja 
 
  -h, --help <arg>   Print this help. 
 

@@ -22,17 +22,17 @@ int main(int argc, char** argv, char** envp)
     cmd.addArgWithFlagAndName('V', "version", false, false, "Output version information and exit");
     cmd.addArgWithFlagAndName('e', "engine", true, false,
         (stringstream() << "Use template engine. Supported engines: " << MSTCH_ENGINE << ", " << INJA_ENGINE
-                        << ". Default is: " << MSTCH_ENGINE)
+                        << ". Default is: " << INJA_ENGINE)
             .str());
     try {
         cmd.parse();
 
         if (cmd.isDefined("-V")) {
-            cout << "1.1.0" << endl;
+            cout << "1.2.0" << endl;
             return 0;
         }
 
-        string engine = MSTCH_ENGINE;
+        string engine = INJA_ENGINE;
         if (cmd.isDefined("-e")) {
             engine = cmd.value("-e");
         }
