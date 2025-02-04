@@ -7,7 +7,7 @@ using namespace std;
 using namespace std::placeholders;
 using namespace Args;
 
-const char* APP_VERSION = "1.2.0";
+const char* APP_VERSION = "1.3.0";
 
 int main(int argc, char** argv, char** envp)
 {
@@ -20,7 +20,7 @@ int main(int argc, char** argv, char** envp)
         cmd.parse();
 
         if (cmd.isDefined("-V")) {
-            cout << "1.2.0" << endl;
+            cout << APP_VERSION << endl;
             return 0;
         }
 
