@@ -1,6 +1,5 @@
 [requires]
 args-parser/6.3.3
-mbits-mstch/1.0.4
 inja/3.4.0
 
 [generators]

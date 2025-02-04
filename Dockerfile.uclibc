@@ -27,4 +27,4 @@ RUN set -x && \
     cd /build && \
     cmake /sources -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Release && \
     cmake --build . && \
-    upx -9 --brute muenvsubst
+    upx -9 --brute cli/muenvsubst
