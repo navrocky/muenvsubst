@@ -112,12 +112,12 @@ Hello, John!
 
   ```sh
   USE_GREETER=no USE_GOODBYER=yes muenvsubst << EOF
-  {%- if USE_GREETER=="yes" -%}
+  ## if USE_GREETER=="yes"
   Hello, {{ USER }}!
-  {%- endif -%}
-  {%- if USE_GOODBYER=="yes" -%}
+  ## endif
+  ## if USE_GOODBYER=="yes"
   Goodbye, {{ USER }}!
-  {%- endif -%}
+  ## endif
   EOF
   ```
 
