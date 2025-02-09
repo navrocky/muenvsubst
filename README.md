@@ -108,7 +108,7 @@ Hello, John!
   Hello, JOHN!
   ```
   
-- Render conditional block:
+- Render conditional block using alternative statement syntax:
 
   ```sh
   USE_GREETER=no USE_GOODBYER=yes muenvsubst << EOF
