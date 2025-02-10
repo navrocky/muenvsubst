@@ -1,6 +1,8 @@
 [requires]
 args-parser/6.3.3
 inja/3.4.0
+nlohmann_json/3.11.3
+catch2/3.7.1
 
 [generators]
 CMakeDeps
