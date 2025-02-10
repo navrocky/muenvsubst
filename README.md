@@ -1,14 +1,14 @@
 # MuEnvSubst
 
 Substitutes environment variables using one of the templating engines, as 
-[envsubst](https://www.gnu.org/software/gettext/manual/html_node/envsubst-Invocation.html) does. 
+[envsubst](https://www.gnu.org/software/gettext/manual/html_node/envsubst-Invocation.html) does, but using a powerfull templating engine. 
 
 This is a list of supported template engines:
 
 - `inja` - [Inja templates](https://pantor.github.io/inja/)
 
-One of the advantages of this utility is that it is built in a small static binary without any dependencies.
-Architecture of binary is Linux x86 (32 bit). It can be run in docker from scratch.
+One of the advantages of this utility is that it is built very small static binary without any dependencies.
+Architecture of binary is Linux x86 (32 bit). It can be run in any Linux x86 and x86_64, both new and very old versions.
 
 ## Installation
 
@@ -162,12 +162,12 @@ Hello, JOHN!
 
 ```sh
 USE_GREETER=no USE_GOODBYER=yes muenvsubst << EOF
-{%- if USE_GREETER=="yes" -%}
+## if USE_GREETER=="yes"
 Hello, {{ USER }}!
-{%- endif -%}
-{%- if USE_GOODBYER=="yes" -%}
+## endif
+## if USE_GOODBYER=="yes"
 Goodbye, {{ USER }}!
-{%- endif -%}
+## endif
 EOF
 ```
 
