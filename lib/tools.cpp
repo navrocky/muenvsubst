@@ -1,5 +1,6 @@
 #include "tools.h"
 
+#include <algorithm>
 #include <iostream>
 #include <iterator>
 
@@ -38,4 +39,27 @@ vector<string> stringSplit(const string& s, const string& delimiter)
     }
     res.push_back(s.substr(prevPos, pos - prevPos));
     return res;
+}
+
+void stringToLower(std::string& res)
+{
+    transform(res.begin(), res.end(), res.begin(), [](unsigned char c) { return tolower(c); });
+}
+
+void stringLTrim(std::string& s)
+{
+    s.erase(s.begin(), find_if(s.begin(), s.end(), [](unsigned char ch) { return !isspace(ch); }));
+}
+
+void stringRTrim(std::string& s)
+{
+    s.erase(find_if(s.rbegin(), s.rend(), [](unsigned char ch) { return !isspace(ch); }).base(), s.end());
+}
+
+bool stringToBool(std::string s)
+{
+    stringToLower(s);
+    stringLTrim(s);
+    stringRTrim(s);
+    return s == "true" || s == "yes" || s == "on" || s == "1";
 }

@@ -1,7 +1,7 @@
 #include <args-parser/all.hpp>
 
-#include "inja_renderer.h"
-#include "tools.h"
+#include <lib/inja_renderer.h>
+#include <lib/tools.h>
 
 using namespace std;
 using namespace std::placeholders;

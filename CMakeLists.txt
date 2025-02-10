@@ -12,3 +12,5 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
 endif()
 
 add_subdirectory(cli)
+add_subdirectory(lib)
+add_subdirectory(test)

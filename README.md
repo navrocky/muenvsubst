@@ -42,33 +42,96 @@ much more powerfull then Mustache.
 Inja syntax documented [here](https://pantor.github.io/inja/) and original Jinja syntax documented 
 [here](https://jinja.palletsprojects.com/en/stable/templates/).
 
-Additional functions:
+Also supported function [pipe](https://jinja.palletsprojects.com/en/stable/templates/#filters) calling syntax. 
+These are equal expressions:
 
-- Split text by delimiter:
+```
+{{ split("A,B,C", ",") }}
+{{ "A,B,C" | split(",") }}
 
-  ```
-  split(text: string, delimiter: string): string
-  ```
-  
-- Convenient convert boolean variable to boolean type:
-  
-  ```
-  varToBool(varName: string): boolean
-  ```
-  
-  This function supports strings "true", "yes", "on", "1" for `true` value, other values supposed to be a `false` value. 
-  
-  Example: `set DO_SMTH = varToBool("DO_SMTH")`
-  
-- Throw error:
-  
-  ```
-  error(message: string)
-  ```
+{{ sh("198c126c-2691-463f-9708-1ee485ce4d68", "sed 's/-//g'") }}
+{{ "198c126c-2691-463f-9708-1ee485ce4d68" | sh("sed 's/-//g'") }}
+```
 
-## Mstch examples
+## Additional Inja functions
 
-Simple variable substitution:
+### sh
+
+Execute shell script with provided stdin and returned stdout.
+
+```
+sh(stdin: string?, command: string): string
+```
+
+Example usage:
+```
+ID={{ "198c126c-2691-463f-9708-1ee485ce4d68" | sh("sed 's/-//g'") }}
+GUID={{ sh("uuidgen") | upper }}
+```
+
+### split
+
+Splits text by delimiter.
+
+```
+split(text: string, delimiter: string): string
+```
+
+### trim
+
+Trims text. Removes spaces and new lines from begin and end of text.
+  
+```
+trim(text: string): string
+```
+
+Example usage:
+```
+{{ "  some text  " | trim }} 
+```
+
+### toBool
+
+Convenient convert any value to boolean type.
+  
+```
+toBool(value: any): boolean
+```
+
+This function supports strings "true", "yes", "on", "1" for `true` value, other values supposed to be a `false` value. 
+
+Example usage:
+```
+{{ "  Yes  " | toBool }}
+```
+
+### varToBool
+
+Convenient convert boolean variable to boolean type.
+  
+```
+varToBool(varName: string): boolean
+```
+
+This function supports strings "true", "yes", "on", "1" for `true` value, other values supposed to be a `false` value. 
+
+Example usage: 
+
+```
+## set DO_SMTH = varToBool("DO_SMTH")
+```
+
+### error
+
+Throws an error.
+  
+```
+error(message: string)
+```
+
+## More Inja examples
+
+### Simple variable substitution
 
 ```sh
 echo "Hello, {{ USER }}!" | muenvsubst
@@ -80,67 +143,54 @@ then output will be:
 Hello, John!
 ```
 
-## Inja examples
+### Using variable and function
 
-- Simple variable substitution:
-  ```sh
-  echo "Hello, {{ USER }}!" | muenvsubst
-  ```
+```sh
+muenvsubst <<EOF
+{%- set username = upper(USER) -%}
+Hello, {{ username }}!
+EOF
+```
 
-  then output will be: 
+then output will be: 
 
-  ```
-  Hello, John!
-  ```
-
-- Using variable and function:
-
-  ```sh
-  muenvsubst <<EOF
-  {%- set username = upper(USER) -%}
-  Hello, {{ username }}!
-  EOF
-  ```
+```
+Hello, JOHN!
+```
   
-  then output will be: 
-  
-  ```
-  Hello, JOHN!
-  ```
-  
-- Render conditional block using alternative statement syntax:
+### Render conditional block
 
-  ```sh
-  USE_GREETER=no USE_GOODBYER=yes muenvsubst << EOF
-  ## if USE_GREETER=="yes"
-  Hello, {{ USER }}!
-  ## endif
-  ## if USE_GOODBYER=="yes"
-  Goodbye, {{ USER }}!
-  ## endif
-  EOF
-  ```
+```sh
+USE_GREETER=no USE_GOODBYER=yes muenvsubst << EOF
+## if USE_GREETER=="yes"
+Hello, {{ USER }}!
+## endif
+## if USE_GOODBYER=="yes"
+Goodbye, {{ USER }}!
+## endif
+EOF
+```
 
-  then output will be: 
-  
-  ```
-  Goodbye, John!
-  ```
+then output will be: 
 
-- Using split and loop:
+```
+Goodbye, John!
+```
+
+### Using split and loop
   
-  ```sh
-  USERS="John,Mark,Peter" muenvsubst << EOF
-  {%- for user in split(USERS,",") -%}
-  Hello, {{ user }}!
-  {%- endfor -%}
-  EOF
-  ```
-  
-  then output will be: 
-  
-  ```
-  Hello, John!
-  Hello, Mark!
-  Hello, Peter!
-  ```
+```sh
+USERS="John,Mark,Peter" muenvsubst << EOF
+{%- for user in split(USERS,",") -%}
+Hello, {{ user }}!
+{%- endfor -%}
+EOF
+```
+
+then output will be: 
+
+```
+Hello, John!
+Hello, Mark!
+Hello, Peter!
+```

@@ -24,3 +24,11 @@ Map getAllEnvs(char** envp)
 }
 
 std::vector<std::string> stringSplit(const std::string& s, const std::string& delimiter);
+
+void stringToLower(std::string& res);
+
+void stringLTrim(std::string& s);
+
+void stringRTrim(std::string& s);
+
+bool stringToBool(std::string s);
