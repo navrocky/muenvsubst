@@ -1,8 +1,11 @@
 #include "tools.h"
 
 #include <algorithm>
+#include <filesystem>
+#include <fstream>
 #include <iostream>
 #include <iterator>
+#include <sstream>
 
 using namespace std;
 
@@ -23,6 +26,32 @@ std::string readAllInput()
     istream_iterator<char> it(cin);
     istream_iterator<char> end;
     return string(it, end);
+}
+
+std::string readFile(const string& file)
+{
+    try {
+        if (!filesystem::exists(file))
+            throw runtime_error("File does not exists");
+        ifstream ifs(file, ios::in);
+        ifs.exceptions(ifs.exceptions() | ios::failbit | ios::badbit);
+        stringstream ss;
+        ss << ifs.rdbuf();
+        return ss.str();
+    } catch (const exception& e) {
+        throw runtime_error((stringstream() << "Cannot read file: \"" << file << "\". Error: " << e.what()).str());
+    }
+}
+
+void writeFile(const std::string& file, const std::string& content)
+{
+    try {
+        ofstream ofs(file, ios::out);
+        ofs.exceptions(ofs.exceptions() | ios::failbit | ios::badbit);
+        ofs << content;
+    } catch (const exception& e) {
+        throw runtime_error((stringstream() << "Cannot write file: \"" << file << "\". Error: " << e.what()).str());
+    }
 }
 
 vector<string> stringSplit(const string& s, const string& delimiter)

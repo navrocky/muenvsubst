@@ -13,20 +13,30 @@ int main(int argc, char** argv, char** envp)
 {
     bool showVersion = false;
     CmdLine cmd(argc, argv);
-    cmd.addHelp(
-        true, argv[0], "Substitutes environment variables using one of the templating engines, as envsubst does.");
-    cmd.addArgWithFlagAndName('V', "version", false, false, "Output version information and exit");
+    cmd.addHelp(true, argv[0], "Substitutes environment variables using Inja templating engine, as envsubst does.");
+    cmd.addArgWithFlagAndName('v', "version", false, false, "Output version information and exit");
+    cmd.addArgWithFlagAndName('i', "in", true, false, "Input file");
+    cmd.addArgWithFlagAndName('o', "out", true, false, "Output file");
     try {
         cmd.parse();
 
-        if (cmd.isDefined("-V")) {
+        if (cmd.isDefined("-v")) {
             cout << APP_VERSION << endl;
             return 0;
         }
 
-        auto tmpl = readAllInput();
-        cout << renderWithInja(tmpl, envp);
-
+        string tmpl;
+        if (cmd.isDefined("-i")) {
+            tmpl = readFile(cmd.value("-i"));
+        } else {
+            tmpl = readAllInput();
+        }
+        auto out = renderWithInja(tmpl, envp);
+        if (cmd.isDefined("-o")) {
+            writeFile(cmd.value("-o"), out);
+        } else {
+            cout << out;
+        }
     } catch (const HelpHasBeenPrintedException&) {
         return 0;
     } catch (const BaseException& x) {

@@ -4,6 +4,8 @@
 #include <vector>
 
 std::string readAllInput();
+std::string readFile(const std::string& file);
+void writeFile(const std::string& file, const std::string& content);
 
 struct KeyValue {
     std::string key;

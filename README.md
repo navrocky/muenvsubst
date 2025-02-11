@@ -23,15 +23,20 @@ sudo chmod +x /usr/local/bin/muenvsubst
 ## Usage
 
 ```
-Substitutes environment variables using one of the templating engines, as 
-envsubst does. 
+Substitutes environment variables using Inja templating engine, as envsubst 
+does. 
 
-USAGE: ./muenvsubst [ -h, --help <arg> ] [ -V, --version ] 
+USAGE: ./muenvsubst [ -h, --help <arg> ] [ -i, --in <arg> ] [ -o, 
+       --out <arg> ] [ -v, --version ] 
 
 OPTIONAL:
  -h, --help <arg> Print this help. 
 
- -V, --version    Output version information and exit
+ -i, --in <arg>   Input file 
+
+ -o, --out <arg>  Output file 
+
+ -v, --version    Output version information and exit
 ```
 
 ## Inja syntax
