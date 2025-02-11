@@ -55,93 +55,13 @@ These are equal expressions:
 
 ## Additional Inja functions
 
-### sh
-
-Execute shell script with provided stdin and returned stdout.
-
-```
-sh(stdin: string?, command: string): string
-```
-
-Example usage:
-```
-ID={{ "198c126c-2691-463f-9708-1ee485ce4d68" | sh("sed 's/-//g'") }}
-GUID={{ sh("uuidgen") | upper | trim }}
-```
-
-### split
-
-Splits text by delimiter.
-
-```
-split(text: string, delimiter: string): string
-```
-
-### trim
-
-Trims text. Removes spaces and new lines from begin and end of text.
-  
-```
-trim(text: string): string
-```
-
-Example usage:
-```
-{{ "  some text  " | trim }} 
-```
-
-### toBool
-
-Convenient convert any value to boolean type.
-  
-```
-toBool(value: any): boolean
-```
-
-This function supports strings "true", "yes", "on", "1" for `true` value, other values supposed to be a `false` value. 
-
-Example usage:
-```
-{{ "  Yes  " | toBool }}
-```
-
-### varToBool
-
-Convenient convert boolean variable to boolean type.
-  
-```
-varToBool(varName: string): boolean
-```
-
-This function supports strings "true", "yes", "on", "1" for `true` value, other values supposed to be a `false` value. 
-
-Example usage: 
-
-```
-## set DO_SMTH = varToBool("DO_SMTH")
-```
-
-### parseJson
-
-Parse JSON string to object.
-  
-```
-parseJson(json: string): json
-```
-
-Example usage: 
-
-```
-## set JSON = parseJson("{\"key\":\"value\"}")
-```
-
-### error
-
-Throws an error.
-  
-```
-error(message: string)
-```
+- [error](functions.md#error) - throws an error
+- [parseJson](functions.md#parseJson) - parse JSON string to object
+- [sh](functions.md#sh) - execute shell script
+- [split](functions.md#split) - splits text by delimiter
+- [toBool](functions.md#toBool) - convert any value to boolean
+- [trim](functions.md#trim) - trims text
+- [varToBool](functions.md#varToBool) - convert variable value to boolean
 
 ## More Inja examples
 
