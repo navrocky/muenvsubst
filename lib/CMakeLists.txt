@@ -8,6 +8,8 @@ include_directories(${CMAKE_SOURCE_DIR}/3rdparty)
 set(SOURCES
   funcs/base64.cpp
   funcs/base64.h
+  funcs/json.cpp
+  funcs/json.h
   funcs/other.cpp
   funcs/other.h
   funcs/shell.cpp

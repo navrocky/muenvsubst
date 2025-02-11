@@ -1,7 +1,6 @@
 #include "string.h"
 
 #include "../tools.h"
-#include <nlohmann/json.hpp>
 
 using namespace std;
 
@@ -42,19 +41,6 @@ inja::json toBool(const inja::Arguments& args)
         return stringToBool(s);
     }
     throw runtime_error((stringstream() << "Unsupported value type").str());
-}
-
-inja::json parseJson(const inja::Arguments& args)
-{
-    if (args.size() != 1)
-        throw runtime_error("Expected 1 parameters: parseJson(json: string): json");
-    auto jsonString = args[0]->get<string>();
-    try {
-        auto json = inja::json::parse(jsonString);
-        return json;
-    } catch (const exception& e) {
-        throw runtime_error((stringstream() << "Cannot parse JSON: " << e.what()).str());
-    }
 }
 
 }

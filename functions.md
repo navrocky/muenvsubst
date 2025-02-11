@@ -16,20 +16,19 @@ Decode base64 string.
 fromBase64(base64: string): string
 ```
 
-### parseJson
+### fromJson
 
 Parse JSON string to object.
   
 ```
-parseJson(json: string): json
+fromJson(json: string): json
 ```
 
 Example usage: 
 
 ```
-## set JSON = parseJson("{\"key\":\"value\"}")
+## set JSON = fromJson("{\"key\":\"value\"}")
 ```
-
 
 ### sh
 
@@ -74,6 +73,21 @@ This function supports strings "true", "yes", "on", "1" for `true` value, other 
 Example usage:
 ```
 {{ "  Yes  " | toBool }}
+```
+
+### toJson
+
+Serialize value to JSON string. 
+JSON indented with N spaces if indent parameter provided.
+  
+```
+toJson(value: any, indent: int?): string
+```
+
+Example usage: 
+
+```
+## set INDENTED_JSON = "{\"key\":\"value\"}" | fromJson | toJson(2)
 ```
 
 ### trim

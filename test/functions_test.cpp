@@ -7,24 +7,40 @@ using namespace Catch::Matchers;
 
 static char* emptyArgs[] = { nullptr };
 
-TEST_CASE("parseJson", "[functions]")
+TEST_CASE("fromJson", "[functions]")
 {
     SECTION("Valid JSON")
     {
-        auto res = renderWithInja(R"({{ parseJson(" { \"key\" : \"value\" } ") }})", emptyArgs);
+        auto res = renderWithInja(R"({{ fromJson(" { \"key\" : \"value\" } ") }})", emptyArgs);
         CHECK(res == R"({"key":"value"})");
     }
     SECTION("Invalid JSON")
     {
         CHECK_THROWS_WITH(
-            renderWithInja(R"({{ parseJson(" { \"key\" } ") }})", emptyArgs), ContainsSubstring("Cannot parse JSON"));
+            renderWithInja(R"({{ fromJson(" { \"key\" } ") }})", emptyArgs), ContainsSubstring("Cannot parse JSON"));
     }
     SECTION("Get value from JSON")
     {
-        auto res = renderWithInja(R"(## set json = parseJson(" { \"key\" : { \"innerKey\": \"innerValue\" } } ")
+        auto res = renderWithInja(R"(## set json = fromJson(" { \"key\" : { \"innerKey\": \"innerValue\" } } ")
 {{ json.key.innerKey }})",
             emptyArgs);
         CHECK(res == "innerValue");
+    }
+}
+
+TEST_CASE("toJson", "[functions]")
+{
+    SECTION("Single line")
+    {
+        auto json = renderWithInja(R"({{ " { \"key\" : \"value\" } " | fromJson | toJson }})", emptyArgs);
+        CHECK(json == R"({"key":"value"})");
+    }
+    SECTION("Indented")
+    {
+        auto json = renderWithInja(R"({{ " { \"key\" : \"value\" } " | fromJson | toJson(2) }})", emptyArgs);
+        CHECK(json == R"({
+  "key": "value"
+})");
     }
 }
 
