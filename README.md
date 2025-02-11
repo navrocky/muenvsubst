@@ -56,9 +56,11 @@ These are equal expressions:
 ## Additional Inja functions
 
 - [error](functions.md#error) - throws an error
+- [fromBase64](functions.md#fromBase64) - decode base64 string
 - [parseJson](functions.md#parseJson) - parse JSON string to object
 - [sh](functions.md#sh) - execute shell script
 - [split](functions.md#split) - splits text by delimiter
+- [toBase64](functions.md#toBase64) - encode base64 string
 - [toBool](functions.md#toBool) - convert any value to boolean
 - [trim](functions.md#trim) - trims text
 - [varToBool](functions.md#varToBool) - convert variable value to boolean

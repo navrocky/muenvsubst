@@ -21,9 +21,28 @@ TEST_CASE("parseJson", "[functions]")
     }
     SECTION("Get value from JSON")
     {
-        auto res
-            = renderWithInja(R"(## set json = parseJson(" { \"key\" : { \"innerKey\": \"innerValue\" } } ")
-{{ json.key.innerKey }})", emptyArgs);
+        auto res = renderWithInja(R"(## set json = parseJson(" { \"key\" : { \"innerKey\": \"innerValue\" } } ")
+{{ json.key.innerKey }})",
+            emptyArgs);
         CHECK(res == "innerValue");
+    }
+}
+
+TEST_CASE("base64", "[functions]")
+{
+    SECTION("To base64")
+    {
+        auto res = renderWithInja(R"({{ toBase64("hello") }})", emptyArgs);
+        CHECK(res == "aGVsbG8=");
+    }
+    SECTION("From base64")
+    {
+        auto res = renderWithInja(R"({{ fromBase64("aGVsbG8=") }})", emptyArgs);
+        CHECK(res == "hello");
+    }
+    SECTION("Encode error")
+    {
+        CHECK_THROWS_WITH(
+            renderWithInja(R"({{ fromBase64("+u====") }})", emptyArgs), ContainsSubstring("Cannot decode base64"));
     }
 }

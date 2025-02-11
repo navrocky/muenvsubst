@@ -8,6 +8,14 @@ Throws an error.
 error(message: string)
 ```
 
+### fromBase64
+
+Decode base64 string.
+
+```
+fromBase64(base64: string): string
+```
+
 ### parseJson
 
 Parse JSON string to object.
@@ -43,6 +51,14 @@ Splits text by delimiter.
 
 ```
 split(text: string, delimiter: string): string
+```
+
+### toBase64
+
+Encode base64 string.
+
+```
+toBase64(text: string): string
 ```
 
 ### toBool
