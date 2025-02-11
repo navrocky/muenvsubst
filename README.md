@@ -121,6 +121,20 @@ Example usage:
 ## set DO_SMTH = varToBool("DO_SMTH")
 ```
 
+### parseJson
+
+Parse JSON string to object.
+  
+```
+parseJson(json: string): json
+```
+
+Example usage: 
+
+```
+## set JSON = parseJson("{\"key\":\"value\"}")
+```
+
 ### error
 
 Throws an error.

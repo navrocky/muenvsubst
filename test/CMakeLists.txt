@@ -3,9 +3,11 @@ set(TARGET muenvsubst-test)
 find_package(Catch2 REQUIRED)
 
 include_directories(${CMAKE_SOURCE_DIR})
+include_directories(${CMAKE_SOURCE_DIR}/3rdparty)
 
 set(SOURCES
     common/main.cpp
+    functions_test.cpp
     process_executor_test.cpp
 )
 

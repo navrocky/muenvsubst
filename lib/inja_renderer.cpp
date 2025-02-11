@@ -16,9 +16,10 @@ string renderWithInja(const string& tmpl, char** envp)
     inja::Environment env;
     env.add_callback("split", bind(InjaFunctions::split, _1));
     env.add_callback("error", bind(InjaFunctions::error, _1));
-    env.add_callback("varToBool", [&](const inja::Arguments& args) { return InjaFunctions::varToBool(args, envs); });
-    env.add_callback("toBool", [&](const inja::Arguments& args) { return InjaFunctions::toBool(args); });
-    env.add_callback("sh", [&](const inja::Arguments& args) { return InjaFunctions::shell(args); });
-    env.add_callback("trim", [&](const inja::Arguments& args) { return InjaFunctions::trim(args); });
+    env.add_callback("varToBool", bind(InjaFunctions::varToBool, _1, envs));
+    env.add_callback("toBool", bind(InjaFunctions::toBool, _1));
+    env.add_callback("sh", bind(InjaFunctions::shell, _1));
+    env.add_callback("trim", bind(InjaFunctions::trim, _1));
+    env.add_callback("parseJson", bind(InjaFunctions::parseJson, _1));
     return env.render(tmpl, envs);
 }
