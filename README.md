@@ -66,7 +66,7 @@ sh(stdin: string?, command: string): string
 Example usage:
 ```
 ID={{ "198c126c-2691-463f-9708-1ee485ce4d68" | sh("sed 's/-//g'") }}
-GUID={{ sh("uuidgen") | upper }}
+GUID={{ sh("uuidgen") | upper | trim }}
 ```
 
 ### split
