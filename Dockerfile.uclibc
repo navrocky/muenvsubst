@@ -2,7 +2,7 @@ FROM navrocky/buildroot-uclibc-toolchain:i686-2023.11.1
 
 RUN set -x && \
     apt-get update && \
-    apt-get -y install --no-install-recommends cmake make python3-pip curl libmpc3 && \
+    apt-get -y install --no-install-recommends cmake make python3-pip curl libmpc3 ninja-build && \
     pip install conan --break-system-packages
 
 ENV UPX_VER=4.2.4
@@ -25,6 +25,6 @@ COPY . /sources/
 
 RUN set -x && \
     cd /build && \
-    cmake /sources -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Release && \
-    cmake --build . && \
+    cmake /sources -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Release -G Ninja && \
+    cmake --build . -t muenvsubst && \
     upx -9 --brute cli/muenvsubst
