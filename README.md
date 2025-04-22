@@ -136,3 +136,24 @@ Hello, John!
 Hello, Mark!
 Hello, Peter!
 ```
+
+### Includes
+
+Content of `greeter.j2` file:
+```
+Hello, {{ USER }}!
+```
+
+Render template:
+
+```sh
+muenvsubst << EOF
+## include "greeter.j2"
+EOF
+```
+
+then output will be: 
+
+```
+Hello, John!
+```

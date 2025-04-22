@@ -20,6 +20,8 @@ set(SOURCES
   inja_renderer.h
   process_executor.cpp
   process_executor.h
+  template_loader.cpp
+  template_loader.h
   tools.cpp
   tools.h
 )

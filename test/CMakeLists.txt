@@ -8,6 +8,7 @@ include_directories(${CMAKE_SOURCE_DIR}/3rdparty)
 set(SOURCES
     common/main.cpp
     functions_test.cpp
+    includes_test.cpp
     process_executor_test.cpp
 )
 

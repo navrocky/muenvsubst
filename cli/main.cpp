@@ -1,6 +1,7 @@
 #include <args-parser/all.hpp>
 
 #include <lib/inja_renderer.h>
+#include <lib/template_loader.h>
 #include <lib/tools.h>
 
 using namespace std;
@@ -31,7 +32,13 @@ int main(int argc, char** argv, char** envp)
         } else {
             tmpl = readAllInput();
         }
-        auto out = renderWithInja(tmpl, envp);
+
+        FileTemplateLoader templateLoader;
+        auto out = renderWithInja(tmpl,
+            {
+                .envs = getAllEnvs<nlohmann::json>(envp),
+                .templateLoader = &templateLoader,
+            });
         if (cmd.isDefined("-o")) {
             writeFile(cmd.value("-o"), out);
         } else {
