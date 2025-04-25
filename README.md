@@ -122,6 +122,16 @@ then output will be:
 Goodbye, John!
 ```
 
+### Safe check of a boolean variable
+
+```sh
+muenvsubst << EOF
+## if default(USE_GREETER, null) | toBool
+Hello, {{ USER }}!
+## endif
+EOF
+```
+
 ### Using split and loop
   
 ```sh

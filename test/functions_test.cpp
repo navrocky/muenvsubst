@@ -7,6 +7,36 @@ using namespace Catch::Matchers;
 
 static char* emptyArgs[] = { nullptr };
 
+TEST_CASE("varToBool", "[functions]")
+{
+    SECTION("Set true variable and check")
+    {
+        auto res = renderWithInja(R"({% set MY_VAR="yes" %}{{ default(MY_VAR, null) | toBool }})");
+        CHECK(res == "true");
+    }
+    SECTION("Check for undefind variable")
+    {
+        auto res = renderWithInja(R"({{ default(MY_VAR, null) | toBool }})");
+        CHECK(res == "false");
+    }
+    auto tmpl = R"({{ varToBool("MY_VAR") }})";
+    SECTION("Non existing variable")
+    {
+        auto res = renderWithInja(tmpl);
+        CHECK(res == "false");
+    }
+    SECTION("Existing true variable")
+    {
+        auto res = renderWithInja(tmpl, { .envs = { { "MY_VAR", "yes" } } });
+        CHECK(res == "true");
+    }
+    SECTION("Existing false variable")
+    {
+        auto res = renderWithInja(tmpl, { .envs = { { "MY_VAR", "no" } } });
+        CHECK(res == "false");
+    }
+}
+
 TEST_CASE("fromJson", "[functions]")
 {
     SECTION("Valid JSON")

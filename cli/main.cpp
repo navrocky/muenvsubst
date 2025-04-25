@@ -12,7 +12,6 @@ const char* APP_VERSION = "1.4.0";
 
 int main(int argc, char** argv, char** envp)
 {
-    bool showVersion = false;
     CmdLine cmd(argc, argv);
     cmd.addHelp(true, argv[0], "Substitutes environment variables using Inja templating engine, as envsubst does.");
     cmd.addArgWithFlagAndName('v', "version", false, false, "Output version information and exit");

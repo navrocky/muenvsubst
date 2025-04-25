@@ -106,6 +106,10 @@ Example usage:
 ### varToBool
 
 Convenient convert boolean variable to boolean type.
+
+> [!WARNING]
+> `varToBool` is deprecated because it does not work with variables defined with the `set` instruction.
+> Use `default(VAR_NAME, null) | toBool` instead.
   
 ```
 varToBool(varName: string): boolean
