@@ -13,7 +13,7 @@ inja::json varToBool(const inja::Arguments& args, inja::json envs)
     if (args.size() != 1)
         throw runtime_error("Expected 1 parameters: toBool(varName: string): bool");
     auto name = args[0]->get<string>();
-    cerr << "Warning: varToBool is deprecated. Use: 'default(" << name << ", null) | toBool' instead";
+    cerr << "Warning: varToBool is deprecated. Use: 'default(" << name << ", null) | toBool' instead" << endl;
     auto val = envs[name];
     if (val.is_null())
         return false;
