@@ -26,17 +26,20 @@ sudo chmod +x /usr/local/bin/muenvsubst
 Substitutes environment variables using Inja templating engine, as envsubst 
 does. 
 
-USAGE: ./muenvsubst [ -h, --help <arg> ] [ -i, --in <arg> ] [ -o, 
-       --out <arg> ] [ -v, --version ] 
+USAGE: ./muenvsubst [ -h, --help <arg> ] [ -i, --in <arg> ] [ -d, 
+       --include-dir <arg> ] [ -o, --out <arg> ] [ -v, --version ] 
 
 OPTIONAL:
- -h, --help <arg> Print this help. 
+ -h, --help <arg>        Print this help. 
 
- -i, --in <arg>   Input file 
+ -i, --in <arg>          Input file 
 
- -o, --out <arg>  Output file 
+ -d, --include-dir <arg> The directory where the included files are searched 
+                         for. This argument can be specified more than once. 
 
- -v, --version    Output version information and exit
+ -o, --out <arg>         Output file 
+
+ -v, --version           Output version information and exit 
 ```
 
 ## Inja syntax
