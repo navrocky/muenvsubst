@@ -32,7 +32,7 @@ std::string readFile(const string& file)
 {
     try {
         if (!filesystem::exists(file))
-            throw runtime_error("File does not exists");
+            throw runtime_error((stringstream() << "File does not exists: \"" << file << "\"").str());
         ifstream ifs(file, ios::in);
         ifs.exceptions(ifs.exceptions() | ios::failbit | ios::badbit);
         stringstream ss;

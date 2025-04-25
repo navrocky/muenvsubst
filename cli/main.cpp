@@ -17,6 +17,8 @@ int main(int argc, char** argv, char** envp)
     cmd.addHelp(true, argv[0], "Substitutes environment variables using Inja templating engine, as envsubst does.");
     cmd.addArgWithFlagAndName('v', "version", false, false, "Output version information and exit");
     cmd.addArgWithFlagAndName('i', "in", true, false, "Input file");
+    cmd.addMultiArg('d', "include-dir", true, false,
+        "The directory where the included files are searched for. This argument can be specified more than once.");
     cmd.addArgWithFlagAndName('o', "out", true, false, "Output file");
     try {
         cmd.parse();
@@ -33,7 +35,17 @@ int main(int argc, char** argv, char** envp)
             tmpl = readAllInput();
         }
 
-        FileTemplateLoader templateLoader;
+        vector<string> includeDirs;
+        if (cmd.isDefined("-d")) {
+            auto dirs = cmd.values("-d");
+            for (const auto& d : dirs) {
+                includeDirs.push_back(d);
+            }
+        }
+
+        FileTemplateLoader templateLoader({
+            .includeDirs = includeDirs,
+        });
         auto out = renderWithInja(tmpl,
             {
                 .envs = getAllEnvs<nlohmann::json>(envp),
