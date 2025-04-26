@@ -1,3 +1,8 @@
+# 1.5.0 (2025-04-26)
+
+- Add includes functionality
+- Deprecate varToBool function
+
 # 1.4.0 (2025-02-12)
 
 - Add command line parameters to read and write file instead of stdin/stdout
