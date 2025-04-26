@@ -72,7 +72,6 @@ These are equal expressions:
 - [toBool](functions.md#toBool) - convert any value to boolean
 - [toJson](functions.md#toJson) - serialize value to JSON string
 - [trim](functions.md#trim) - trims text
-- [varToBool](functions.md#varToBool) - convert variable value to boolean
 
 ## More Inja examples
 
