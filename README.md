@@ -44,8 +44,7 @@ OPTIONAL:
 
 ## Inja syntax
 
-[Inja](https://pantor.github.io/inja/) inspired by Python's Jinja and supports subset of original Jinja syntax. It 
-much more powerfull then Mustache. 
+[Inja](https://pantor.github.io/inja/) inspired by Python's Jinja and supports subset of original Jinja syntax. 
 
 Inja syntax documented [here](https://pantor.github.io/inja/) and original Jinja syntax documented 
 [here](https://jinja.palletsprojects.com/en/stable/templates/).
