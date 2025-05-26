@@ -8,7 +8,7 @@ using namespace std;
 using namespace std::placeholders;
 using namespace Args;
 
-const char* APP_VERSION = "1.4.0";
+const char* APP_VERSION = "1.5.0";
 
 int main(int argc, char** argv, char** envp)
 {
