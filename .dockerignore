@@ -1,3 +1,7 @@
-/Dockerfile
-/dist
-
+**
+!3rdparty/**
+!cli/**
+!lib/**
+!test/**
+!conanfile.txt
+!CMakeLists.txt
