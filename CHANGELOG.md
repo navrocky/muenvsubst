@@ -1,3 +1,7 @@
+# 1.6.0 (2026-05-22)
+
+- Add support for expressions in arrays
+
 # 1.5.0 (2025-04-26)
 
 - Add includes functionality
