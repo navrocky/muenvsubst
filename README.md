@@ -148,6 +148,16 @@ Hello, Mark!
 Hello, Peter!
 ```
 
+### Use expressions in arrays:
+```sh
+muenvsubst << EOF
+## set user1="John"
+## for user in [user1, sh("id -nu") | trim]
+Hello, {{ user }}!
+## endfor
+EOF
+```
+
 ### Includes
 
 Content of `greeter.j2` file:
