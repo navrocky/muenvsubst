@@ -89,3 +89,9 @@ TEST_CASE("base64", "[functions]")
         CHECK_THROWS_WITH(renderWithInja(R"({{ fromBase64("+u====") }})"), ContainsSubstring("Cannot decode base64"));
     }
 }
+
+TEST_CASE("Expressions in arrays", "[functions]")
+{
+    auto res = renderWithInja(R"({% set myvar="Hello" %}{{ [myvar] }})");
+    CHECK(res == "[\"Hello\"]");
+}
