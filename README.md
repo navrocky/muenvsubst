@@ -1,19 +1,19 @@
 # MuEnvSubst
 
 Substitutes environment variables using one of the templating engines, as 
-[envsubst](https://www.gnu.org/software/gettext/manual/html_node/envsubst-Invocation.html) does, but using a powerfull templating engine. 
+[envsubst](https://www.gnu.org/software/gettext/manual/html_node/envsubst-Invocation.html) does, but using a powerful templating engine. 
 
 This is a list of supported template engines:
 
 - `inja` - [Inja templates](https://pantor.github.io/inja/)
 
-One of the advantages of this utility is that it is built very small static binary without any dependencies.
-Architecture of binary is Linux x86 (32 bit). It can be run in any Linux x86 and x86_64, both new and very old versions.
+One of the advantages of this utility is that it is built as a very small static binary without any dependencies.
+The architecture of the binary is Linux x86 (32 bit). It can be run on any Linux x86 and x86_64, both new and very old versions.
 
 ## Installation
 
-Download and copy binary to any destination specified in `PATH` (~/bin, /usr/local/bin, /usr/bin). 
-Do not forget to set execution flag on binary with `chmod`.
+Download and copy the binary to any destination specified in `PATH` (~/bin, /usr/local/bin, /usr/bin). 
+Do not forget to set the execution flag on the binary with `chmod`.
 
 ```sh
 sudo curl https://github.com/navrocky/muenvsubst/releases/download/1.6.0/muenvsubst -Lo /usr/local/bin/muenvsubst
@@ -44,13 +44,13 @@ OPTIONAL:
 
 ## Inja syntax
 
-[Inja](https://pantor.github.io/inja/) inspired by Python's Jinja and supports subset of original Jinja syntax. 
+[Inja](https://pantor.github.io/inja/) is inspired by Python's Jinja and supports a subset of the original Jinja syntax. 
 
-Inja syntax documented [here](https://pantor.github.io/inja/) and original Jinja syntax documented 
+Inja syntax is documented [here](https://pantor.github.io/inja/) and the original Jinja syntax is documented 
 [here](https://jinja.palletsprojects.com/en/stable/templates/).
 
-Also supported function [pipe](https://jinja.palletsprojects.com/en/stable/templates/#filters) calling syntax. 
-These are equal expressions:
+The function [pipe](https://jinja.palletsprojects.com/en/stable/templates/#filters) calling syntax is also supported. 
+These are equivalent expressions:
 
 ```
 {{ split("A,B,C", ",") }}
@@ -148,7 +148,7 @@ Hello, Mark!
 Hello, Peter!
 ```
 
-### Use expressions in arrays:
+### Use expressions in arrays
 ```sh
 muenvsubst << EOF
 ## set user1="John"
@@ -177,4 +177,25 @@ then output will be:
 
 ```
 Hello, John!
+```
+
+### Macros
+
+Macros let you define reusable template fragments with parameters and default values:
+
+```sh
+muenvsubst << EOF
+{%- macro greeter(name, greeting="Hello") -%}
+{{ greeting }}, {{ name }}!
+{%- endmacro -%}
+{{ greeter(USER) }}
+{{ greeter("World", "Hi") }}
+EOF
+```
+
+then output will be:
+
+```
+Hello, John!
+Hi, World!
 ```
