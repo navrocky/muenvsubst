@@ -16,7 +16,7 @@ Download and copy the binary to any destination specified in `PATH` (~/bin, /usr
 Do not forget to set the execution flag on the binary with `chmod`.
 
 ```sh
-sudo curl https://github.com/navrocky/muenvsubst/releases/download/1.6.0/muenvsubst -Lo /usr/local/bin/muenvsubst
+sudo curl https://github.com/navrocky/muenvsubst/releases/download/1.7.0/muenvsubst -Lo /usr/local/bin/muenvsubst
 sudo chmod +x /usr/local/bin/muenvsubst
 ```
 
