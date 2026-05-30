@@ -49,16 +49,68 @@ OPTIONAL:
 Inja syntax is documented [here](https://pantor.github.io/inja/) and the original Jinja syntax is documented 
 [here](https://jinja.palletsprojects.com/en/stable/templates/).
 
+### Pipe syntax
+
 The function [pipe](https://jinja.palletsprojects.com/en/stable/templates/#filters) calling syntax is also supported. 
 These are equivalent expressions:
 
-```
+```jinja
 {{ split("A,B,C", ",") }}
 {{ "A,B,C" | split(",") }}
 
 {{ sh("198c126c-2691-463f-9708-1ee485ce4d68", "sed 's/-//g'") }}
 {{ "198c126c-2691-463f-9708-1ee485ce4d68" | sh("sed 's/-//g'") }}
 ```
+
+### Macros
+
+Macros let you define a reusable chunk of template that takes parameters and is called like a function. 
+They are similar in spirit to Jinja2 macros. A macro is defined with `{% macro name(params) %}...{% endmacro %}` 
+and called with `{{ name(args) }}`. 
+
+```jinja
+// Define a macro
+{% macro greet(name) %}Hello {{ name }}!{% endmacro %}
+
+// and use it
+{{ greet("world") }}
+```
+
+Parameters may have default values, which are used when the call omits the corresponding positional argument:
+```jinja
+{% macro link(href, label="click me") %}<a href="{{ href }}">{{ label }}</a>{% endmacro -%}
+{{ link("/home") }}
+{{ link("/about", "About") }}
+```
+Output:
+```
+<a href="/home">click me</a>
+<a href="/about">About</a>
+```
+
+
+### Filter statement
+
+The `{% filter ... %} ... {% endfilter %}` statement renders the block of content between the tags
+and passes the result as the first argument to the given filter. Any function or macro that takes a string as its first
+argument and returns a string can be used as a filter, and filters can be chained with the pipe `|` syntax and take
+extra arguments.
+
+```jinja
+{% set indent_value=4
+{
+## filter indent(indent_value, true)
+"sample": "json"
+## endfilter
+}
+```
+Output:
+```json
+{
+    "sample": "json"
+}
+```
+
 
 ## Additional Inja functions
 
@@ -71,6 +123,8 @@ These are equivalent expressions:
 - [toBool](functions.md#toBool) - convert any value to boolean
 - [toJson](functions.md#toJson) - serialize value to JSON string
 - [trim](functions.md#trim) - trims text
+- [center](functions.md#center) - centers text in specified width
+- [indent](functions.md#indent) - indents text with spaces or with provided string
 
 ## More Inja examples
 
@@ -185,10 +239,9 @@ Macros let you define reusable template fragments with parameters and default va
 
 ```sh
 muenvsubst << EOF
-{%- macro greeter(name, greeting="Hello") -%}
-{{ greeting }}, {{ name }}!
-{%- endmacro -%}
-{{ greeter(USER) }}
+{% macro greeter(name, greeting="Hello") %}{{ greeting }}, {{ name }}!{% endmacro -%}
+
+{{ greeter(USER) }}{{ greeter("World", "Hi") }}
 {{ greeter("World", "Hi") }}
 EOF
 ```
@@ -198,4 +251,57 @@ then output will be:
 ```
 Hello, John!
 Hi, World!
+```
+
+### Filters
+
+Apply a single filter to the block content:
+
+```sh
+neighbour=Peter muenvsubst << EOF
+## filter upper
+Hello {{ neighbour }}!
+## endfilter
+EOF
+```
+
+then output will be:
+
+```
+HELLO PETER!
+```
+
+Chain filters with the pipe syntax:
+
+```sh
+neighbour=Peter muenvsubst << EOF
+## filter replace("e", "3") | upper
+{{ neighbour }}
+## endfilter
+EOF
+```
+
+then output will be:
+
+```
+P3T3R
+```
+
+Filters with arguments:
+
+```sh
+muenvsubst << EOF
+## filter center(11)
+name
+## endfilter
+## filter indent("// ", true)
+line1
+line2
+## endfilter
+EOF
+```
+then output will be:
+
+```
+    name   
 ```

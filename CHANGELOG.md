@@ -1,3 +1,8 @@
+# 1.7.0 (2026-05-25)
+
+- Add support for macros
+- Add support for filters
+
 # 1.6.0 (2026-05-22)
 
 - Add support for expressions in arrays
@@ -25,3 +30,4 @@
 # 1.2.0 (2025-01-23)
 
 - Add Inja engine
+

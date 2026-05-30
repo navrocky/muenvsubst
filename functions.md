@@ -122,3 +122,49 @@ Example usage:
 ```
 ## set DO_SMTH = varToBool("DO_SMTH")
 ```
+
+### center
+
+Center a string in a field of the given width (default 80).
+
+```
+center(text: string, width: int = 80): string
+```
+
+Example usage:
+
+```
+## set centered = center("Peter", 11)
+|{{ centered }}|
+```
+
+Output:
+
+```
+|   Peter   |
+```
+
+### indent
+
+Indent every line but the first by a number of spaces, or by a string.
+
+```
+indent(text: string, width: int | string, first: boolean = false, blank: boolean = false): string
+```
+
+If width is int then function indents with spaces, else indents with a provided string.
+If first=true then it intents first line.
+If blanks=true then it also indent empty lines.
+
+Example usage:
+```
+{{ indent("line1\nline2", 4) }}
+{{ indent("line1\nline2", "> ", true) }}
+```
+Output:
+```
+line1
+    line2
+> line1
+> line2
+```
