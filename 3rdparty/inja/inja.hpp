@@ -1614,6 +1614,11 @@ class Parser {
   // Created lazily on the first macro definition in the current parse.
   std::shared_ptr<Template> current_macro_owner;
 
+  // Points to the most recently created TextNode, used to detect (without RTTI)
+  // whether a block ends with literal text so a trailing newline can be trimmed
+  // from a macro body.
+  const AstNode* last_text_node {nullptr};
+
   std::stack<IfStatementNode*> if_statement_stack;
   std::stack<ForStatementNode*> for_statement_stack;
   std::stack<BlockStatementNode*> block_statement_stack;
@@ -2337,6 +2342,30 @@ class Parser {
       auto& macro_statement_data = macro_statement_stack.top();
       get_next_token();
 
+      // Trim a single trailing newline from the macro body so a definition such as
+      //   ## macro foo()
+      //   test
+      //   ## endmacro
+      // expands to "test" rather than "test\n" when called. The newline before
+      // 'endmacro' belongs to the source layout, not to the macro's value.
+      auto& body_nodes = macro_statement_data->body.nodes;
+      if (!body_nodes.empty() && body_nodes.back().get() == last_text_node) {
+        auto* const text_node = static_cast<TextNode*>(body_nodes.back().get());
+        const char* const data = tmpl.content.c_str() + text_node->pos;
+        size_t new_length = text_node->length;
+        if (new_length > 0 && data[new_length - 1] == '\n') {
+          new_length -= 1;
+          if (new_length > 0 && data[new_length - 1] == '\r') {
+            new_length -= 1;
+          }
+          if (new_length == 0) {
+            body_nodes.pop_back();
+          } else {
+            body_nodes.back() = std::make_shared<TextNode>(text_node->pos, new_length);
+          }
+        }
+      }
+
       current_block = macro_statement_data->parent;
       macro_statement_stack.pop();
     } else {
@@ -2370,6 +2399,7 @@ class Parser {
         return;
       case Token::Kind::Text: {
         current_block->nodes.emplace_back(std::make_shared<TextNode>(tok.text.data() - tmpl.content.c_str(), tok.text.size()));
+        last_text_node = current_block->nodes.back().get();
       } break;
       case Token::Kind::StatementOpen: {
         get_next_token();
